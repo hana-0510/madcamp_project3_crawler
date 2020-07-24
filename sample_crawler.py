@@ -1,6 +1,7 @@
 import json
 import time
 import csv
+import requests
 from selenium import webdriver
 from collections import OrderedDict
 
@@ -14,8 +15,12 @@ if __name__ == '__main__':
     driver.get(search_link + keyword)
     total_num = int(driver.find_element_by_css_selector('div.page_sec._page_navi > span').text.split('/')[1])
     next_key_element = driver.find_element_by_css_selector('a.next._btn._btn_next.on')
+    
 
     for i in range(total_num - 1):
+        url = "http://192.249.19.245:3680/exhibits/upload"
+        headers = {'Content-Type': 'application/json', 'Accept':'application/json'}
+        
         title_selector = 'div.item_box > dl > dd.tit > a'
         period_selector = 'div.item_box > dl > dd.period'
         place_selector = 'div.item_box > dl > dd:nth-child(6) > a'
@@ -50,6 +55,8 @@ if __name__ == '__main__':
                     period_split = period.split(" ~ ")
                     start_split = period_split[0].split(".")
                     finish_split = period_split[1].split(".")
+                    if len(finish_split) == 1:
+                        finish_split = [0, 0, 0, 0]
                     
                     start_y, start_m, start_d, temp = tuple(start_split)
                     finish_y, finish_m, finish_d, temp = tuple(finish_split)
@@ -74,8 +81,9 @@ if __name__ == '__main__':
                     file_data["place_url"] = place_url
                     file_data["reserv_url"] = reserv_url
                     
-                    print(json.dumps(file_data, ensure_ascii=False, indent="\t"))
+                    requests.post(url, data=json.dumps(file_data), headers = headers)
                 else:
                     print("Error or finished")
+                    
         next_key_element.click()
         time.sleep(1)
