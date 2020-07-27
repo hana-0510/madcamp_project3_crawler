@@ -87,10 +87,12 @@ if __name__ == '__main__':
                         file_data["start_y"] = start_y
                         file_data["start_m"] = start_m
                         file_data["start_d"] = start_d
+                        file_data["start_num"] = start_y * 10000 + start_m * 100 + start_d
                         
                         file_data["finish_y"] = finish_y
                         file_data["finish_m"] = finish_m
                         file_data["finish_d"] = finish_d
+                        file_data["finish_num"] = finish_y * 10000 + finish_m * 100 + finish_d
                         
                         file_data["place_url"] = place_url
                         file_data["reserv_url"] = reserv_url
