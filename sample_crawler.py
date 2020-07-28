@@ -23,7 +23,7 @@ if __name__ == '__main__':
         total_num = int(driver.find_element_by_css_selector('div.page_sec._page_navi > span').text.split('/')[1])
         next_key_element = driver.find_element_by_css_selector('a.next._btn._btn_next.on')
 
-        for i in range(total_num - 1):
+        for i in range(total_num):
             url = "http://192.249.19.242:7380/maintain"
             headers = {'Content-Type': 'application/json', 'Accept':'application/json'}
             
